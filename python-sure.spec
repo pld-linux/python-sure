@@ -7,12 +7,13 @@
 %define 	module	sure
 Summary:	Utility belt for automated testing in python for python
 Name:		python-%{module}
-Version:	1.2.9
+Version:	1.2.12
 Release:	1
 License:	GPL v3+
 Group:		Libraries/Python
-Source0:	https://github.com/gabrielfalcao/sure/archive/%{version}.tar.gz
-# Source0-md5:	d551e363c75a9ba96ac75cb0305d3159
+# Source0:	https://github.com/gabrielfalcao/sure/archive/%{version}.tar.gz
+Source0:	https://pypi.python.org/packages/source/s/%{module}/%{module}-%{version}.tar.gz
+# Source0-md5:	fc57c30e76bddba68f84443ec91e7026
 URL:		https://github.com/gabrielfalcao/sure
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
@@ -82,7 +83,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc spec/*.md *.md
+%doc README.md
 %dir %{py_sitescriptdir}/sure
 %{py_sitescriptdir}/sure/*.py[co]
 %if "%{py_ver}" > "2.4"
@@ -93,7 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
 %files -n python3-%{module}
 %defattr(644,root,root,755)
-%doc spec/*.md *.md
+%doc  README.md
 %{py3_sitescriptdir}/%{module}
 %{py3_sitescriptdir}/%{module}-%{version}-py*.egg-info
 %endif
