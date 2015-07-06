@@ -8,7 +8,7 @@
 Summary:	Utility belt for automated testing in python for python
 Name:		python-%{module}
 Version:	1.2.12
-Release:	2
+Release:	3
 License:	GPL v3+
 Group:		Libraries/Python
 # Source0:	https://github.com/gabrielfalcao/sure/archive/%{version}.tar.gz
@@ -21,11 +21,17 @@ BuildRequires:	rpmbuild(macros) >= 1.219
 %if %{with python2}
 BuildRequires:	python-devel
 BuildRequires:	python-distribute
+BuildRequires:	python-mock
+BuildRequires:	python-nose
+BuildRequires:	python-six
 %endif
 %if %{with python3}
 BuildRequires:	python3-devel
 BuildRequires:	python3-distribute
+BuildRequires:	python3-mock
 BuildRequires:	python3-modules
+BuildRequires:	python3-nose
+BuildRequires:	python3-six
 %endif
 Requires:	python-modules
 BuildArch:	noarch
