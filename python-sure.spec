@@ -2,18 +2,19 @@
 # Conditional build:
 %bcond_without	tests	# do not perform "make test"
 %bcond_without	python2 # CPython 2.x module
-%bcond_with	python3 # CPython 3.x module
+%bcond_without	python3 # CPython 3.x module
 
 %define 	module	sure
 Summary:	Utility belt for automated testing in python for python
 Name:		python-%{module}
 Version:	1.2.12
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Libraries/Python
 # Source0:	https://github.com/gabrielfalcao/sure/archive/%{version}.tar.gz
 Source0:	https://pypi.python.org/packages/source/s/%{module}/%{module}-%{version}.tar.gz
 # Source0-md5:	fc57c30e76bddba68f84443ec91e7026
+Patch0:		%{name}-py3_fixes.patch
 URL:		https://github.com/gabrielfalcao/sure
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
@@ -45,6 +46,7 @@ Sure is heavily inspired by should.js.
 
 %prep
 %setup -q -n %{module}-%{version}
+%patch0 -p1
 
 %build
 %if %{with python2}
@@ -52,7 +54,6 @@ Sure is heavily inspired by should.js.
 %endif
 
 %if %{with python3}
-CFLAGS="%{rpmcppflags} %{rpmcflags}" \
 %{__python3} setup.py build --build-base build-3 %{?with_tests:test}
 %endif
 
