@@ -8,7 +8,7 @@
 Summary:	Utility belt for automated testing in python for python
 Name:		python-%{module}
 Version:	1.2.12
-Release:	3
+Release:	4
 License:	GPL v3+
 Group:		Libraries/Python
 # Source0:	https://github.com/gabrielfalcao/sure/archive/%{version}.tar.gz
