@@ -17,7 +17,7 @@ Source0:	https://pypi.python.org/packages/source/s/%{module}/%{module}-%{version
 Patch0:		%{name}-py3_fixes.patch
 URL:		https://github.com/gabrielfalcao/sure
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.219
+BuildRequires:	rpmbuild(macros) >= 1.710
 %if %{with python2}
 BuildRequires:	python-devel
 BuildRequires:	python-distribute
