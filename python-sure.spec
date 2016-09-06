@@ -4,17 +4,17 @@
 %bcond_without	python2 # CPython 2.x module
 %bcond_without	python3 # CPython 3.x module
 
-%define 	module	sure
-Summary:	Utility belt for automated testing in python for python
+%define		module		sure
+%define		egg_name	sure
+%define		pypi_name	sure
+Summary:	Utility belt for automated testing in Python for Python
 Name:		python-%{module}
-Version:	1.2.12
-Release:	5
+Version:	1.2.24
+Release:	1
 License:	GPL v3+
 Group:		Libraries/Python
-# Source0:	https://github.com/gabrielfalcao/sure/archive/%{version}.tar.gz
-Source0:	https://pypi.python.org/packages/source/s/%{module}/%{module}-%{version}.tar.gz
-# Source0-md5:	fc57c30e76bddba68f84443ec91e7026
-Patch0:		%{name}-py3_fixes.patch
+Source0:	https://pypi.python.org/packages/source/s/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
+# Source0-md5:	a396cc3c71d551bfdb9bc45363ca05da
 URL:		https://github.com/gabrielfalcao/sure
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.710
@@ -52,7 +52,6 @@ Sure is heavily inspired by should.js.
 
 %prep
 %setup -q -n %{module}-%{version}
-%patch0 -p1
 
 %build
 %if %{with python2}
@@ -83,11 +82,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.md
-%dir %{py_sitescriptdir}/sure
-%{py_sitescriptdir}/sure/*.py[co]
-%if "%{py_ver}" > "2.4"
-%{py_sitescriptdir}/%{module}-%{version}-py*.egg-info
-%endif
+%dir %{py_sitescriptdir}/%{module}
+%{py_sitescriptdir}/%{module}/*.py[co]
+%{py_sitescriptdir}/%{egg_name}-%{version}-py*.egg-info
 %endif
 
 %if %{with python3}
@@ -95,5 +92,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc  README.md
 %{py3_sitescriptdir}/%{module}
-%{py3_sitescriptdir}/%{module}-%{version}-py*.egg-info
+%{py3_sitescriptdir}/%{egg_name}-%{version}-py*.egg-info
 %endif
