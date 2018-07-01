@@ -10,7 +10,7 @@
 Summary:	Utility belt for automated testing in Python for Python
 Name:		python-%{module}
 Version:	1.2.24
-Release:	2
+Release:	3
 License:	GPL v3+
 Group:		Libraries/Python
 Source0:	https://pypi.python.org/packages/source/s/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
