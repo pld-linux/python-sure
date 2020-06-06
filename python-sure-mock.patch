@@ -1,0 +1,65 @@
+--- sure-1.4.11/setup.py.orig	2018-05-16 23:37:56.000000000 +0200
++++ sure-1.4.11/setup.py	2020-06-06 07:54:38.467908573 +0200
+@@ -58,7 +58,7 @@
+         return __doc__
+ 
+ 
+-install_requires = ['mock', 'six']
++install_requires = ['mock;python_version<"3"', 'six']
+ tests_require = ['nose']
+ 
+ 
+--- sure-1.4.11/sure/core.py.orig	2018-03-17 23:31:48.000000000 +0100
++++ sure-1.4.11/sure/core.py	2020-06-06 07:56:27.183986275 +0200
+@@ -19,9 +19,12 @@
+ import os
+ 
+ try:
+-    from mock import _CallList
++    from unittest.mock import _CallList
+ except ImportError:
+-    from mock.mock import _CallList
++    try:
++        from mock import _CallList
++    except ImportError:
++        from mock.mock import _CallList
+ 
+ import inspect
+ from six import (
+--- sure-1.4.11/tests/test_assertion_builder.py.orig	2017-03-20 14:51:42.000000000 +0100
++++ sure-1.4.11/tests/test_assertion_builder.py	2020-06-06 07:58:55.016518731 +0200
+@@ -17,7 +17,10 @@
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ from __future__ import unicode_literals
+ import re
+-import mock
++try:
++    from unittest import mock
++except ImportError:
++    import mock
+ from collections import OrderedDict
+ 
+ from datetime import datetime, timedelta
+@@ -654,18 +654,18 @@
+ 
+     except AssertionError as e:
+         if PY2:
+-            expect(str(e)).to.equal("When calling 'blah [tests/test_assertion_builder.py line 635]' the exception message does not match. Expected to match regex: u'invalid regex'\n against:\n u'this message'")
++            expect(str(e)).to.equal("When calling 'blah [tests/test_assertion_builder.py line 638]' the exception message does not match. Expected to match regex: u'invalid regex'\n against:\n u'this message'")
+         else:
+-            expect(str(e)).to.equal("When calling b'blah [tests/test_assertion_builder.py line 635]' the exception message does not match. Expected to match regex: 'invalid regex'\n against:\n 'this message'")
++            expect(str(e)).to.equal("When calling b'blah [tests/test_assertion_builder.py line 638]' the exception message does not match. Expected to match regex: 'invalid regex'\n against:\n 'this message'")
+ 
+     try:
+         expect(blah).when.called_with(1).should.throw(ValueError, re.compile(r'invalid regex'))
+         raise RuntimeError('should not have reached here')
+     except AssertionError as e:
+         if PY2:
+-            expect(str(e)).to.equal("When calling 'blah [tests/test_assertion_builder.py line 635]' the exception message does not match. Expected to match regex: u'invalid regex'\n against:\n u'this message'")
++            expect(str(e)).to.equal("When calling 'blah [tests/test_assertion_builder.py line 638]' the exception message does not match. Expected to match regex: u'invalid regex'\n against:\n u'this message'")
+         else:
+-            expect(str(e)).to.equal("When calling b'blah [tests/test_assertion_builder.py line 635]' the exception message does not match. Expected to match regex: 'invalid regex'\n against:\n 'this message'")
++            expect(str(e)).to.equal("When calling b'blah [tests/test_assertion_builder.py line 638]' the exception message does not match. Expected to match regex: 'invalid regex'\n against:\n 'this message'")
+ 
+ def test_should_not_be_different():
+     ("'something'.should_not.be.different('SOMETHING'.lower())")
