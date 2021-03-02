@@ -9,7 +9,7 @@ Summary:	Utility belt for automated testing in Python for Python
 Summary(pl.UTF-8):	Narzędzia do automatycznego testowania w Pythonie
 Name:		python-%{module}
 Version:	1.4.11
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Libraries/Python
 #Source0Download; https://pypi.org/simple/sure/
