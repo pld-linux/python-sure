@@ -1,3 +1,4 @@
+# NOTE: sure.cli and sure.stubs are python3-only
 #
 # Conditional build:
 %bcond_without	tests	# unit tests
@@ -8,13 +9,13 @@
 Summary:	Utility belt for automated testing in Python for Python
 Summary(pl.UTF-8):	Narzędzia do automatycznego testowania w Pythonie
 Name:		python-%{module}
-Version:	1.4.11
-Release:	4
+Version:	2.0.0
+Release:	1
 License:	GPL v3+
 Group:		Libraries/Python
 #Source0Download; https://pypi.org/simple/sure/
 Source0:	https://files.pythonhosted.org/packages/source/s/sure/%{module}-%{version}.tar.gz
-# Source0-md5:	51f28b4ea7a6f59d1dd09f8eaaeabee7
+# Source0-md5:	2944861acf83042a291ffb1190a56292
 Patch0:		%{name}-mock.patch
 URL:		https://github.com/gabrielfalcao/sure
 %if %{with python2}
@@ -22,13 +23,13 @@ BuildRequires:	python-devel >= 1:2.7
 BuildRequires:	python-mock >= 2.0.0
 BuildRequires:	python-nose
 BuildRequires:	python-setuptools
-BuildRequires:	python-six >= 1.10.0
+BuildRequires:	python-six >= 1.16.0
 %endif
 %if %{with python3}
 BuildRequires:	python3-devel >= 1:3.4
 BuildRequires:	python3-nose
 BuildRequires:	python3-setuptools
-BuildRequires:	python3-six >= 1.10.0
+BuildRequires:	python3-six >= 1.16.0
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
@@ -77,11 +78,16 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %py_install
 
+# sure.cli is python3-only (uses f"..." syntax), so this entry point is invalid
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/sure
+
 %py_postclean
 %endif
 
 %if %{with python3}
 %py3_install
+
+%{__mv} $RPM_BUILD_ROOT%{_bindir}/sure{,-3}
 %endif
 
 %clean
@@ -99,6 +105,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -n python3-%{module}
 %defattr(644,root,root,755)
 %doc README.rst
+%attr(755,root,root) %{_bindir}/sure-3
 %{py3_sitescriptdir}/sure
 %{py3_sitescriptdir}/sure-%{version}-py*.egg-info
 %endif
