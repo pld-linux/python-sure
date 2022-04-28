@@ -17,6 +17,7 @@ Group:		Libraries/Python
 Source0:	https://files.pythonhosted.org/packages/source/s/sure/%{module}-%{version}.tar.gz
 # Source0-md5:	2944861acf83042a291ffb1190a56292
 Patch0:		%{name}-mock.patch
+Patch1:		%{name}-python3.10-workaround.patch
 URL:		https://github.com/gabrielfalcao/sure
 %if %{with python2}
 BuildRequires:	python-devel >= 1:2.7
@@ -64,6 +65,7 @@ jest znacząco zainspirowany should.js.
 %prep
 %setup -q -n %{module}-%{version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 %if %{with python2}
