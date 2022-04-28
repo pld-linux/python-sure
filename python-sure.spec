@@ -22,12 +22,14 @@ URL:		https://github.com/gabrielfalcao/sure
 BuildRequires:	python-devel >= 1:2.7
 BuildRequires:	python-mock >= 2.0.0
 BuildRequires:	python-nose
+BuildRequires:	python-rednose
 BuildRequires:	python-setuptools
 BuildRequires:	python-six >= 1.16.0
 %endif
 %if %{with python3}
 BuildRequires:	python3-devel >= 1:3.4
 BuildRequires:	python3-nose
+BuildRequires:	python3-rednose
 BuildRequires:	python3-setuptools
 BuildRequires:	python3-six >= 1.16.0
 %endif
