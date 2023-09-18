@@ -9,6 +9,7 @@
 Summary:	Utility belt for automated testing in Python for Python
 Summary(pl.UTF-8):	Narzędzia do automatycznego testowania w Pythonie
 Name:		python-%{module}
+# keep 2.0.0 here for python2 support
 Version:	2.0.0
 Release:	1
 License:	GPL v3+
