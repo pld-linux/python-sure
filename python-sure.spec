@@ -11,7 +11,7 @@ Summary(pl.UTF-8):	Narzędzia do automatycznego testowania w Pythonie
 Name:		python-%{module}
 # keep 2.0.0 here for python2 support
 Version:	2.0.0
-Release:	2
+Release:	3
 License:	GPL v3+
 Group:		Libraries/Python
 #Source0Download; https://pypi.org/simple/sure/
