@@ -74,7 +74,14 @@ jest znacząco zainspirowany should.js.
 %endif
 
 %if %{with python3}
-%py3_build %{?with_tests:test}
+%py3_build
+
+%if %{with tests}
+# use explicit plugins list for reliable builds (delete PYTEST_PLUGINS if empty)
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+PYTEST_PLUGINS= \
+%{__python3} -m pytest tests
+%endif
 %endif
 
 %install
