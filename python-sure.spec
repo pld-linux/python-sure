@@ -3,7 +3,7 @@
 # Conditional build:
 %bcond_without	tests	# unit tests
 %bcond_without	python2 # CPython 2.x module
-%bcond_without	python3 # CPython 3.x module
+%bcond_with	python3 # CPython 3.x module (built from python3-sure.spec)
 
 %define		module		sure
 Summary:	Utility belt for automated testing in Python for Python
@@ -11,7 +11,7 @@ Summary(pl.UTF-8):	Narzędzia do automatycznego testowania w Pythonie
 Name:		python-%{module}
 # keep 2.0.0 here for python2 support
 Version:	2.0.0
-Release:	4
+Release:	5
 License:	GPL v3+
 Group:		Libraries/Python
 #Source0Download; https://pypi.org/simple/sure/
@@ -23,17 +23,21 @@ URL:		https://github.com/gabrielfalcao/sure
 %if %{with python2}
 BuildRequires:	python-devel >= 1:2.7
 BuildRequires:	python-mock >= 2.0.0
-BuildRequires:	python-nose
-BuildRequires:	python-rednose
 BuildRequires:	python-setuptools
 BuildRequires:	python-six >= 1.16.0
+%if %{with tests}
+BuildRequires:	python-nose
+BuildRequires:	python-rednose
+%endif
 %endif
 %if %{with python3}
 BuildRequires:	python3-devel >= 1:3.4
-BuildRequires:	python3-nose
-BuildRequires:	python3-rednose
 BuildRequires:	python3-setuptools
 BuildRequires:	python3-six >= 1.16.0
+%if %{with tests}
+BuildRequires:	python3-pynose
+BuildRequires:	python3-rednose
+%endif
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
@@ -77,10 +81,7 @@ jest znacząco zainspirowany should.js.
 %py3_build
 
 %if %{with tests}
-# use explicit plugins list for reliable builds (delete PYTEST_PLUGINS if empty)
-PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
-PYTEST_PLUGINS= \
-%{__python3} -m pytest tests
+nosetests-%{py3_ver} tests
 %endif
 %endif
 
@@ -90,7 +91,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %py_install
 
-# sure.cli is python3-only (uses f"..." syntax), so this entry point is invalid
+# sure.cli is python3-only (uses f-strings), so this entry point is invalid
 %{__rm} $RPM_BUILD_ROOT%{_bindir}/sure
 
 %py_postclean
